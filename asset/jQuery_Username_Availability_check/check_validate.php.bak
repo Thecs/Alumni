@@ -1,0 +1,36 @@
+<?php
+
+###### db ##########
+$db_username = 'xxxx';
+$db_password = 'xxxx';
+$db_name = 'xxxx';
+$db_host = 'localhost';
+################
+
+
+
+
+if(isset($_POST["username"]))
+{
+  //connect to database
+  $connecDB = mysqli_connect(HOST, USERNAME, PASS, DBNAME)or die('could not connect to database');
+  
+  //received username value from registration page
+  $username =  $_POST["username"]; 
+
+  //check username in db
+  $results = mysqli_query($connecDB,"SELECT alumnus_stuid FROM alumnus_TB WHERE alumnus_stuid ='$username'");
+  
+  $username_exist = mysqli_num_rows($results); //records count
+  
+  //if returned value is more than 0, username is not available
+  if($username_exist) {
+      die('<img src="imgs/not-available.png" />');
+  }else{
+      die('<img src="imgs/available.png" />');
+  }
+}
+
+    mysqli_close($connecDB);
+
+?>
